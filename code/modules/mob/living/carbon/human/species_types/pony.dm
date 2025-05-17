@@ -83,30 +83,22 @@
 	when living or working among aliens."
 
 /datum/species/pony/get_species_description()
-	return "Born from an anomalous garden world of their name sake, Equestrians lived under a primitive but global feudal empire for centuries until fairly recently, \
-	when they were liberated by TerraGov as part of Operation Swift Sword. Today, they live in diaspora and under human rule, struggling to integrate into a \
-	galactic community that doesn't care."
+	return "Born from an anomalous garden world of their name sake, Equestrians lived under a primitive but global feudal empire for centuries until fairly recently. \
+	Humanity made first contact as part of their explorations throughout the galaxy, and uplifted them to their level of technology, integrating then into \
+	their community."
 
 /datum/species/pony/get_species_lore()
 	return list(
-	"Changing the world with just the power of thought sounds pretty neat: until it's someone else doing it, and now everybody's scared.",
+	"My little pony, my little pony, how is the galaxy treating you? My little pony, my little pony, may all your wishes soon come true!",
 
 	"Equestrians are small, long-lived, alien ungulates, and the only all-psychic species on the galactic stage. \
-	Desired on one hand and feared on the other for their capacity for the impossible. They come in three kinds (pegasi, unicorns, Earth ponies) \
+	Admired by many for their friendly demeanor and their capacity for the impossible. They come in three kinds (pegasi, unicorns, Earth ponies) \
 	that served different social roles in their primitive society, and are still today distinguished by their particular psionic talents — flight and cloudwalking, \
-	telekinesis and complex formulae, and other respectively. ",
+	telekinesis and complex formulae, and great physical strength respectively. ",
 
-	"TerraGov liberated them from a \"dictatorship of daisy-chained psionic malefactors\" some decades ago, as part of a brutally efficient first \
-	strike called Operation Swift Sword. Broad resistance to TerraGov occupation lasted days, sometimes a few weeks in some locations, but guerrilla \
-	fighting upon the part of some of the primitive military and subordinate paramilitaries continues to today.",
+	"TerraGov first made contact with the primitive Equestrian society some decades ago as part of their extended SETI program. The first extra-terrestrial \
+	life forms to be found outside the Solar System, they were met with great anticipation and excitement by the people of Earth. First contact was established \ when radio signals from Equestria were intercepted and decoded. Since then, missions to establish further contact \ have proven quite successful, and Equestrians have been integrated into greater Orion Cluster society.",
 
-	"What became of Equestria's world government has since fallen into TerraGov's sphere influence, and is following through on a commitment \
-	to integrate with the galactic community. The flagship program of this push is the Modern Citizenship Academy, which has campuses across Equestria \
-	and beyond. These schools provide various forms and levels of education, to both rear the youth up \"right\", and upskill the existing Equestrian \
-	workforce to meet the demands of a galactic market.",
-
-	"While the most obvious place for working ponies is as professional psions (of some description) or weather engineers, they are also found in all \
-	manner of positions within TerraGov's public services — specifically the military, first responder orgs — and (now, increasingly) major human corporations.",
 	)
 
 /datum/species/pony/create_pref_unique_perks()
