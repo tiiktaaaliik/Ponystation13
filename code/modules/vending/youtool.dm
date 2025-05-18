@@ -28,6 +28,7 @@
 		/obj/item/weldingtool/hugetank = 2,
 		/obj/item/clothing/head/utility/welding = 2,
 		/obj/item/clothing/gloves/color/yellow = 1,
+		/obj/item/clothing/shoes/horseshoes = 1,
 	)
 	refill_canister = /obj/item/vending_refill/youtool
 	default_price = PAYCHECK_CREW

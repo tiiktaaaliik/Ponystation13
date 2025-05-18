@@ -374,6 +374,8 @@
 			siemens_coeff *= wear_suit.siemens_coefficient
 	else if(gloves)
 		siemens_coeff *= gloves.siemens_coefficient
+	else if(shoes && shoes.siemens_coefficient != null)
+		siemens_coeff *= shoes.siemens_coefficient
 
 	siemens_coeff *= physiology.siemens_coeff
 	siemens_coeff *= dna.species.siemens_coeff
