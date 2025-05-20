@@ -290,24 +290,36 @@ def main_cycle():
     """
     Activate the script
     """
-    while True:
-        midi_file = obtain_midi_file()
-        if not midi_file:
-            return # Cancel
-        score = midi2score_without_ticks(midi_file)
-        score = filter_events_from_score(score)
-        score = filter_start_time_and_note_num(score)
-        score = filter_empty_tracks(score)
-        score = merge_events(score)
-        score = sort_score_by_event_times(score)
-        score = convert_into_delta_times(score)
-        score = perform_roundation(score)
-        most_frequent_dur = obtain_common_duration(score)
-        score = reduce_score_to_chords(score)
-        sheet_music = obtain_sheet_music(score, most_frequent_dur)
-        split_music = explode_sheet_music(sheet_music)
-        sheet_music = finalize_sheet_music(split_music, most_frequent_dur)
+    midi_file = obtain_midi_file()
+    if not midi_file:
+        return # Cancel
+    score = midi2score_without_ticks(midi_file)
+    score = filter_events_from_score(score)
+    score = filter_start_time_and_note_num(score)
+    score = filter_empty_tracks(score)
+    score = merge_events(score)
+    score = sort_score_by_event_times(score)
+    score = convert_into_delta_times(score)
+    score = perform_roundation(score)
+    most_frequent_dur = obtain_common_duration(score)
+    score = reduce_score_to_chords(score)
+    sheet_music = obtain_sheet_music(score, most_frequent_dur)
+    split_music = explode_sheet_music(sheet_music)
+    sheet_music = finalize_sheet_music(split_music, most_frequent_dur)
 
-        root.clipboard_append(sheet_music)
+    root.clipboard_append(sheet_music)
+
+    # Ask user where to save the output file
+    save_path = filedialog.asksaveasfilename(
+        title="Save Sheet Music As",
+        defaultextension=".txt",
+        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+    )
+    if save_path:
+        with open(save_path, "w", encoding="utf-8") as f:
+            f.write(sheet_music)
+        messagebox.showinfo("Midi2Piano", f"Sheet music saved to:\n{save_path}\n(and copied to clipboard)")
+    else:
+        messagebox.showinfo("Midi2Piano", "Sheet music copied to clipboard (no file saved).")
 
 main_cycle()
