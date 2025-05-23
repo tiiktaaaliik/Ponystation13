@@ -137,11 +137,11 @@ ALLOW_LATEJOIN_ANTAGONISTS
 #DISABLE_WAROPS
 
 ## Uncomment to enable dynamic ruleset config file.
-DYNAMIC_CONFIG_ENABLED
+#DYNAMIC_CONFIG_ENABLED
 
 ## RANDOM EVENTS ###
 ## Comment this out to disable random events during the round.
-#ALLOW_RANDOM_EVENTS
+ALLOW_RANDOM_EVENTS
 
 ## Uncomment this to disable station traits.
 #FORBID_STATION_TRAITS
