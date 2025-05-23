@@ -653,3 +653,18 @@
 		/obj/item/clothing/mask/gas/clown_hat = 1,
 	)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/insulated_horseshoes
+	name = "Insulated Horseshoes"
+	result = /obj/item/clothing/shoes/horseshoes
+	time = 6 SECONDS
+	tool_behaviors = list(TOOL_WIRECUTTER)
+	reqs = list(
+		/obj/item/clothing/gloves = 1,
+		/obj/item/stack/sheet/iron = 5,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/insulated_horseshoes/check_requirements(mob/user, list/collected_requirements)
+	var/obj/item/clothing/gloves/insulated = collected_requirements[/obj/item/clothing/gloves][1]
+	return insulated.siemens_coefficient == 0 // gloves are not subtyped, so a special check is required to make sure they are insulated
