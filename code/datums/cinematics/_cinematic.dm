@@ -67,11 +67,14 @@
 	// Register a signal to handle what happens when a different cinematic tries to play over us.
 	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, PROC_REF(handle_replacement_cinematics))
 
-	// Pause OOC
+	// Pause OOC (and LOOC!)
 	var/ooc_toggled = FALSE
+	var/looc_toggled = FALSE
 	if(is_global && stop_ooc && GLOB.ooc_allowed)
 		ooc_toggled = TRUE
+		looc_toggled = TRUE
 		toggle_ooc(FALSE)
+		toggle_looc(FALSE)
 
 	// Place the /atom/movable/screen/cinematic into everyone's screens, and prevent movement.
 	for(var/mob/watching_mob in watchers)
@@ -84,12 +87,14 @@
 	play_cinematic()
 
 	// Cleans up after it's done playing.
-	addtimer(CALLBACK(src, PROC_REF(clean_up_cinematic), ooc_toggled), cleanup_time)
+	addtimer(CALLBACK(src, PROC_REF(clean_up_cinematic), ooc_toggled, looc_toggled), cleanup_time)
 
 /// Cleans up the cinematic after a set timer of it sticking on the end screen.
-/datum/cinematic/proc/clean_up_cinematic(was_ooc_toggled = FALSE)
+/datum/cinematic/proc/clean_up_cinematic(was_ooc_toggled = FALSE, was_looc_toggled = FALSE)
 	if(was_ooc_toggled)
 		toggle_ooc(TRUE)
+	if(was_looc_toggled)
+		toggle_looc(TRUE)
 
 	stop_cinematic()
 

@@ -187,6 +187,8 @@
 
 /datum/config_entry/flag/ooc_during_round
 
+/datum/config_entry/flag/looc_during_round
+
 // deprecated for unclear name
 /datum/config_entry/number/commendations
 	integer = FALSE

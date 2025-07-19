@@ -94,8 +94,11 @@ PICTURE_LOGGING_CAMERA
 ## disconnect players who are considered afk
 # KICK_INACTIVE
 
-## Comment this out to stop admins being able to choose their personal ooccolor
+## Comment this out to stop admins being able to choose their personal ooc color
 ALLOW_ADMIN_OOCCOLOR
+
+## Comment this out to stop admins being able to choose their personal looc color
+ALLOW_ADMIN_LOOCCOLOR
 
 ## Comment this out to stop admins being able to choose their personal asay color
 ALLOW_ADMIN_ASAYCOLOR

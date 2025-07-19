@@ -25,11 +25,14 @@ em						{font-style: normal;	font-weight: bold;}
 
 .prefix					{					font-weight: bold;}
 .oocplain				{}
+.loocplain				{}
 .warningplain			{}
-.ooc					{					font-weight: bold;}
+.ooc					{					 font-weight: bold;}
+.looc					{}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
+.adminobserverlooc		{color: #687ed4;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
-
+.adminlooc				{color: #700038;	font-weight: bold;}
 .adminsay				{color:	#FF4500;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
 

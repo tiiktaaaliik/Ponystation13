@@ -211,7 +211,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 /client/verb/select_ignore()
 	set name = "Ignore"
 	set category = "OOC"
-	set desc ="Ignore a player's messages on the OOC channel"
+	set desc ="Ignore a player's messages on the OOC and LOOC channels"
 
 	// Make a list to choose players from
 	var/list/players = list()
@@ -287,13 +287,13 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	prefs.save_preferences()
 
 	// Express that we've ignored the selected player in chat
-	to_chat(src, span_infoplain("You are now ignoring [selection] on the OOC channel."))
+	to_chat(src, span_infoplain("You are now ignoring [selection] on the OOC and LOOC channels."))
 
 // Unignore verb
 /client/verb/select_unignore()
 	set name = "Unignore"
 	set category = "OOC"
-	set desc = "Stop ignoring a player's messages on the OOC channel"
+	set desc = "Stop ignoring a player's messages on the OOC and LOOC channels"
 
 	// Check if we've ignored any players
 	if(!length(prefs.ignoring))
@@ -325,7 +325,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	prefs.save_preferences()
 
 	// Express that we've unignored the selected player in chat
-	to_chat(src, span_infoplain("You are no longer ignoring [selection] on the OOC channel."))
+	to_chat(src, span_infoplain("You are no longer ignoring [selection] on the OOC and LOOC channels."))
 
 /client/proc/show_previous_roundend_report()
 	set name = "Your Last Round"

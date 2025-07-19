@@ -2988,3 +2988,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
+
+// Looks like the place to me too!
+/mob/proc/get_top_level_mob() // Something Important as of https://github.com/tgstation/tgstation/pull/39316/files and https://github.com/vlggms/lobotomy-corp13/pull/1257/files
+	if(istype(src.loc, /mob) && src.loc != src)
+		var/mob/M = src.loc
+		return M.get_top_level_mob()
+	return src

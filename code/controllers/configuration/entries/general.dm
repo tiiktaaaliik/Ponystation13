@@ -63,6 +63,9 @@
 /// log messages sent in OOC
 /datum/config_entry/flag/log_ooc
 
+/// log messages sent in LOOC
+/datum/config_entry/flag/log_looc
+
 /// log login/logout
 /datum/config_entry/flag/log_access
 
@@ -167,6 +170,9 @@
 
 /// allows admins with relevant permissions to have their own ooc colour
 /datum/config_entry/flag/allow_admin_ooccolor
+
+/// allows admins with relevant permissions to have their own looc colour
+/datum/config_entry/flag/allow_admin_looccolor
 
 /// allows admins with relevant permissions to have a personalized asay color
 /datum/config_entry/flag/allow_admin_asaycolor

@@ -1,4 +1,4 @@
-export type Channel = 'Say' | 'Radio' | 'Me' | 'OOC' | 'Admin';
+export type Channel = 'Say' | 'Radio' | 'Me' | 'OOC' | 'LOOC' | 'Admin'; // As seen (at the very least) in [code\__DEFINES\speech_channels.dm]
 
 /**
  * ### ChannelIterator
@@ -8,9 +8,9 @@ export type Channel = 'Say' | 'Radio' | 'Me' | 'OOC' | 'Admin';
  */
 export class ChannelIterator {
   private index: number = 0;
-  private readonly channels: Channel[] = ['Say', 'Radio', 'Me', 'OOC', 'Admin'];
+  private readonly channels: Channel[] = ['Say', 'Radio', 'Me', 'OOC', 'LOOC', 'Admin']; // no visible typing indicators over others when LOOCing
   private readonly blacklist: Channel[] = ['Admin'];
-  private readonly quiet: Channel[] = ['OOC', 'Admin'];
+  private readonly quiet: Channel[] = ['OOC', 'LOOC', 'Admin'];
 
   public next(): Channel {
     if (this.blacklist.includes(this.channels[this.index])) {

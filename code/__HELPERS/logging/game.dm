@@ -14,6 +14,10 @@
 /proc/log_ooc(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME_OOC, text, data)
 
+/// Logging for messages sent in LOOC
+/proc/log_looc(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_LOOC, text, data)
+
 /// Logging for prayed messages
 /proc/log_prayer(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME_PRAYER, text, data)
@@ -29,4 +33,3 @@
 /// Logging for OOC votes
 /proc/log_vote(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME_VOTE, text, data)
-

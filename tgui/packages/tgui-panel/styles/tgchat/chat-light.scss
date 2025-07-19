@@ -246,8 +246,8 @@ a:visited {
 .name,
 .prefix,
 .ooc,
-.looc,
 .adminooc,
+.adminlooc,
 .admin,
 .medal,
 .yell {
@@ -292,13 +292,28 @@ em {
   font-weight: bold;
 }
 
+.looc {
+  color: hsl(182, 100%, 40%);
+  font-weight: bold;
+}
+
 .adminobserverooc {
   color: hsl(195, 100%, 40%);
   font-weight: bold;
 }
 
+.adminobserverlooc {
+  color: hsl(228, 56%, 62%);
+  font-weight: bold;
+}
+
 .adminooc {
   color: hsl(330, 100%, 22%);
+  font-weight: bold;
+}
+
+.adminlooc {
+  color: hsl(330, 100%, 22%); //turns out this color is waay better
   font-weight: bold;
 }
 
@@ -320,6 +335,7 @@ em {
 .emote,
 .infoplain,
 .oocplain,
+.loocplain,
 .warningplain {
 }
 

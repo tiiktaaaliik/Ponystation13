@@ -9,8 +9,8 @@
  */
 /datum/tgui_say/proc/alter_entry(payload)
 	var/entry = payload["entry"]
-	/// No OOC leaks
-	if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
+	/// No OOC leaks (and no LOOC weirdness, too!)
+	if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == LOOC_CHANNEL || payload["channel"] == ME_CHANNEL)
 		return pick(hurt_phrases)
 	/// Random trimming for larger sentences
 	if(length(entry) > 50)
@@ -43,6 +43,9 @@
 			return TRUE
 		if(OOC_CHANNEL)
 			client.ooc(entry)
+			return TRUE
+		if(LOOC_CHANNEL)
+			client.looc(entry)
 			return TRUE
 		if(ADMIN_CHANNEL)
 			SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, entry)

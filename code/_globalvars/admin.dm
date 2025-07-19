@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(spanname_to_formatting, list(
 	"Info" = "info",
 	"Info Plain" = "infoplain",
 	"Interface" = "interface",
-	"Looc" = "looc",
+	"LOOC" = "looc",
 	"Medal" = "medal",
 	"Medradio" = "medradio",
 	"Message" = "message",
