@@ -361,3 +361,29 @@
 	if(prob(60/severity))
 		to_chat(owner, span_warning("Your breathing tube suddenly closes!"))
 		owner.losebreath += 2
+
+/obj/item/organ/cyberimp/mouth/fangs
+	name = "thestral fangs"
+	desc = "Large, pointy canines."
+	icon_state = "horns" // placeholder
+	aug_overlay = "teeth_overlay"
+	slot = ORGAN_SLOT_FANGS
+	w_class = WEIGHT_CLASS_TINY
+	organ_flags = ORGAN_ORGANIC | ORGAN_VIRGIN
+
+
+/obj/item/organ/cyberimp/fangs/on_bodypart_insert(obj/item/bodypart/head)
+	. = ..()
+	head.unarmed_damage_low += 5
+	head.unarmed_damage_high += 10
+	head.unarmed_effectiveness += 10
+	head.unarmed_attack_effect = ATTACK_EFFECT_BITE
+	head.unarmed_sharpness = SHARP_EDGED
+
+/obj/item/organ/cyberimp/fangs/on_bodypart_remove(obj/item/bodypart/head)
+	. = ..()
+	head.unarmed_damage_low -= 5
+	head.unarmed_damage_high -= 10
+	head.unarmed_effectiveness -= 10
+	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
+	head.unarmed_sharpness = initial(head.unarmed_sharpness)

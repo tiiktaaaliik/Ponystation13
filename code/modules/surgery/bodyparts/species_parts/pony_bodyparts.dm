@@ -247,6 +247,13 @@
 	var/mutable_appearance/eyelashes = mutable_appearance('icons/mob/human/human_face.dmi', "pony_eyelids", -BODY_LAYER, parent)
 	return list(eyelashes)
 
+/obj/item/organ/eyes/pony/thestral
+	name = "thestral eyes"
+	desc = "Very sensitive and delicate, but allows one to see well in the dark."
+	eye_icon_state = "pony_eye"
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
+
 /obj/item/organ/ears/pony
 	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
 	icon_state = "m_pony_ears_pony_FRONT"
@@ -274,6 +281,24 @@
 	//if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 	//	return FALSE
 	return TRUE
+
+/obj/item/organ/ears/pony/thestral
+	name = "thestral pony ears"
+	desc = "Very sensitive and delicate, but grants very keen hearing."
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	icon_state = "m_pony_ears_thestral_FRONT"
+	worn_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	worn_icon_state = "m_pony_ears_thestral_FRONT"
+	visual = TRUE
+	damage_multiplier = 3 // veryyy sensitive
+
+/obj/item/organ/ears/pony/thestral/on_mob_insert(mob/living/carbon/ear_owner)
+	. = ..()
+	ADD_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
+
+/obj/item/organ/ears/pony/thestral/on_mob_remove(mob/living/carbon/ear_owner)
+	. = ..()
+	REMOVE_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
 
 /obj/item/organ/tail/pony
 	name = "pony tail"
@@ -315,13 +340,13 @@
 	relevant_inherent_trait = TRAIT_PONY_PREFS
 
 /datum/preference/choiced/pony_choice/init_possible_values()
-	return list("Unicorn", "Pegasus", "Earth")
+	return list("Unicorn", "Pegasus", "Earth", "Thestral")
 
 /datum/preference/choiced/pony_choice/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["pony_archetype"] = value
 
 /datum/preference/choiced/pony_choice/create_default_value()
-	return pick(list("Unicorn", "Pegasus", "Earth"))
+	return pick(list("Unicorn", "Pegasus", "Earth", "Thestral"))
 
 /datum/preference/color/unicorn_tk_color
 	savefile_key = "unicorn_tk_color"
@@ -760,6 +785,19 @@
 	remove_organ_trait(TRAIT_VIRUS_WEAKNESS)
 	jumping_power.Remove(organ_owner)
 
+/obj/item/organ/pony_wings/thestral
+	name = "thestral wings"
+	icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	icon_state = "batpony_wings_open"
+	worn_icon = 'icons/mob/human/species/pony/bodyparts.dmi'
+	worn_icon_state = "batpony_wings_open"
+	bodypart_overlay = /datum/bodypart_overlay/mutant/pony_wings/thestral
+
+/obj/item/organ/pony_wings/thestral/Initialize(mapload)
+	. = ..()
+	jumping_power = new /datum/action/cooldown/spell/icarian_flight/thestral(src)
+	jumping_power.our_wings = src
+
 /datum/bodypart_overlay/mutant/pony_wings
 	dyable = TRUE
 	color_source = ORGAN_COLOR_INHERIT
@@ -774,6 +812,12 @@
 	var/state_to_use = unfurled ? "m_pony_wings_pony_FRONT" : "m_pony_wings_pony_folded_FRONT"
 	var/mutable_appearance/appearance = mutable_appearance('icons/mob/human/species/pony/bodyparts.dmi', state_to_use, layer = image_layer)
 	return appearance
+
+/datum/bodypart_overlay/mutant/pony_wings/thestral/get_image(image_layer, obj/item/bodypart/limb)
+	var/state_to_use = unfurled ? "batpony_wings_open" : "batpony_wings_folded"
+	var/mutable_appearance/appearance = mutable_appearance('icons/mob/human/species/pony/bodyparts.dmi', state_to_use, layer = image_layer)
+	return appearance
+
 
 /datum/bodypart_overlay/mutant/pony_wings/generate_icon_cache()
 	. = ..()
@@ -792,13 +836,18 @@
 	var/mob/living/carbon/human/last_caster
 	var/obj/item/organ/pony_wings/our_wings
 
+/datum/action/cooldown/spell/icarian_flight/thestral
+	name = "Thestral Flight"
+	button_icon_state = "batpony_wings_open"
+	cooldown_time = 15 SECONDS
+
 /datum/action/cooldown/spell/icarian_flight/cast(mob/living/cast_on)
 	. = ..()
 	last_caster = cast_on
 	var/mob/living/carbon/human/pegasus = cast_on
 	pegasus.visible_message(span_warning("[pegasus] flies with their wings!"))
 	pegasus.balloon_alert_to_viewers("flies")
-	playsound(pegasus, 'sound/effects/arcade_jump.ogg', 75, vary=TRUE)
+	playsound(pegasus, 'sound/effects/pegasuswings.ogg', 75, vary=TRUE)
 
 	var/datum/bodypart_overlay/mutant/pony_wings/wings_overlay = our_wings.bodypart_overlay
 	wings_overlay.unfurled = TRUE
@@ -1002,6 +1051,12 @@
 		my_pony.add_mood_event("pony_brain_grounded", /datum/mood_event/pony_grounded)
 	else
 		my_pony.clear_mood_event("pony_brain_grounded")
+	if(HAS_TRAIT(my_pony, TRAIT_NOCTURNAL))
+		var/lums = (get_turf(my_pony)).get_lumcount()
+		if(lums > 0.6)
+			my_pony.add_mood_event("dislike_light", /datum/mood_event/dislike_light)
+		else
+			my_pony.clear_mood_event("dislike_light")
 
 /datum/action/cooldown/spell/pointed/telepathy
 	name = "Telepathic Communication"

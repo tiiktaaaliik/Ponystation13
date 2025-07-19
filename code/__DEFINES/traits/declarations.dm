@@ -277,6 +277,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNIQUE_AQUARIUM_CONTENT "unique_aquarium_content"
 /// Mobs that hate showers, being sprayed with water etc.
 #define TRAIT_WATER_HATER "water_hater"
+// Mobs that dislike lit areas
+#define TRAIT_NOCTURNAL "nocturnal"
 /// Improved boons from showers and some features centered around water, should also suppress TRAIT_WATER_HATER
 #define TRAIT_WATER_ADAPTATION "water_adaptation"
 /// Tells us that the mob urrently has the fire_handler/wet_stacks status effect

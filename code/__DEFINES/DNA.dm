@@ -110,6 +110,7 @@
 #define ORGAN_SLOT_BRAIN_CEREBELLUM "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_CNS "brain_antistun"
 #define ORGAN_SLOT_BREATHING_TUBE "breathing_tube"
+#define ORGAN_SLOT_FANGS "fangs"
 #define ORGAN_SLOT_EARS "ears"
 #define ORGAN_SLOT_EYES "eye_sight"
 #define ORGAN_SLOT_HEART "heart"
@@ -186,6 +187,7 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 	ORGAN_SLOT_STOMACH,
 	ORGAN_SLOT_STOMACH_AID,
 	ORGAN_SLOT_BREATHING_TUBE,
+	ORGAN_SLOT_FANGS,
 	ORGAN_SLOT_EARS,
 	ORGAN_SLOT_EYES,
 	ORGAN_SLOT_LUNGS,

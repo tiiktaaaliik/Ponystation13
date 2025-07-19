@@ -60,6 +60,18 @@
 		if("Earth")
 			var/obj/item/organ/earth_pony_core/core = new(organ_holder)
 			core.Insert(organ_holder)
+		if("Thestral")
+			ADD_TRAIT(organ_holder, TRAIT_NOCTURNAL, INNATE_TRAIT)
+			var/obj/item/organ/pony_wings/thestral/batwings = new(organ_holder)
+			var/obj/item/organ/eyes/pony/thestral/bateyes = new(organ_holder)
+			var/obj/item/organ/ears/pony/thestral/batears = new(organ_holder)
+			var/obj/item/organ/vocal_cords/thestral/batvocalcords = new(organ_holder)
+			var/obj/item/organ/cyberimp/mouth/fangs/batfangs = new(organ_holder)
+			batwings.Insert(organ_holder)
+			bateyes.Insert(organ_holder)
+			batears.Insert(organ_holder)
+			batvocalcords.Insert(organ_holder)
+			batfangs.Insert(organ_holder)
 
 /datum/species/pony/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
 	human_for_preview.dna.features["mcolor"] = "#FFFFFF"
