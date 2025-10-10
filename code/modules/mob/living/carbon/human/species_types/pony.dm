@@ -70,7 +70,7 @@
 			batwings.Insert(organ_holder)
 			bateyes.Insert(organ_holder)
 			batears.Insert(organ_holder)
-			batvocalcords.Insert(organ_holder)
+			// batvocalcords.Insert(organ_holder)
 			batfangs.Insert(organ_holder)
 
 /datum/species/pony/prepare_human_for_preview(mob/living/carbon/human/human_for_preview)
