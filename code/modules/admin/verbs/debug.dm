@@ -1,39 +1,43 @@
-ADMIN_VERB(pony_check, R_DEBUG, "A Hairstyle Check", "Species-specific hairstyle and species debugcheck", ADMIN_CATEGORY_DEBUG)
-	var/mob/living/carbon/it_me = user.mob
-	var/obj/item/bodypart/head/my_head = it_me.get_bodypart(BODY_ZONE_HEAD)
+ADMIN_VERB(pony_check, R_DEBUG, "A Head-Hairstyle Check", "Species-specific hairstyle and species debugcheck", ADMIN_CATEGORY_DEBUG)
+	if(istype(user.mob, /mob/living))
+		var/mob/living/carbon/it_me = user.mob
+		var/obj/item/bodypart/head/my_head = it_me.get_bodypart(BODY_ZONE_HEAD)
 
-	it_me.update_body_parts()
+		it_me.update_body_parts()
 
-	if(my_head)
-		// Hairstyle checks
-		to_chat(user, "<br>Let's check if you have a hairstyle...", confidential = TRUE)
-		if(my_head.hairstyle)
-			to_chat(user, "And you do! There it is: -[my_head.hairstyle]-", confidential = TRUE)
-			if(findtext("[my_head.hairstyle]", "Equestrian"))
-				to_chat(user, "You have pony hair. If you are a pony, then this shouldn't have offset or scaling. Otherwise this should be smushed to fit a human head.<br>", confidential = TRUE)
+		if(my_head)
+			// Hairstyle checks
+			to_chat(user, "<br>Let's check if you have a hairstyle...", confidential = TRUE)
+			if(my_head.hairstyle)
+				to_chat(user, "And you do! There it is: -[my_head.hairstyle]-", confidential = TRUE)
+				if(findtext("[my_head.hairstyle]", "Equestrian"))
+					to_chat(user, "You have pony hair. If you have a pony head, then this should be untouched. Otherwise this should be smushed and offset to fit a human head.<br>", confidential = TRUE)
+				else
+					to_chat(user, "You have human hair. If you have a pony head, then this should have offset and scaling to fit a pony head. Otherwise this should be untouched.<br>", confidential = TRUE)
+
+			// What type of living mob are we? Aiming for ponies (as a human species (it just is, okay?)), but the minimum is being a living creature with a possibility for hairstyle.
+			if(!ishuman(user.mob) && ispony(user.mob)) //ts so ass
+				to_chat(user, "Not a human, but a pony. Interesting, considering how ponies are human species internally. Where did you forget it?<br>", confidential = TRUE)
+			if(ishuman(user.mob))
+				to_chat(user, "ishuman() check passed!")
+				if(!ispony(user.mob))
+					to_chat(user, "<strong>You are not of pony species.</strong><br>", confidential = TRUE)
+				else
+					to_chat(user, "Additional ispony() check passed! You are of pony species!<br>", confidential = TRUE)
+
+				var/list/mob_contents = user.mob.get_contents()
+				for(var/content in mob_contents)
+					if(findtext(text("[content]"), "pony"))
+						to_chat(user, "Found a ponything: [content] [ADMIN_VV(content)]", confidential = TRUE)
+					if(istype(content, /obj/item/bodypart/head/))
+						to_chat(user, "You have the following head: [content] [ADMIN_VV(content)] of type [my_head.type]", confidential = TRUE)
+
 			else
-				to_chat(user, "You have human hair. If you are a pony, then this should have offset and scaling. Otherwise this should be scaled to fit a pony head.<br>", confidential = TRUE)
+				to_chat(user, "You are not of human variety. Or of pony, for that matter.", confidential = TRUE)
+		else // no head wa wa
+			to_chat(user, "tough luck buddy", confidential = TRUE)
 
-		// What type of living mob are we? Aiming for ponies, but the minimum is being a living creature with a possibility for hairstyle.
-		if(ishuman(user.mob))
-			to_chat(user, "ishuman() check passed!")
-			if(!ispony(user.mob))
-				to_chat(user, "<strong>You are not of pony species.</strong><br>", confidential = TRUE)
-			else
-				to_chat(user, "Additional ispony() check passed! You are of pony species!<br>")
-
-			var/list/mob_contents = user.mob.get_contents()
-			for(var/content in mob_contents)
-				if(findtext(text("[content]"), "pony"))
-					to_chat(user, "Found a ponything: [content] [ADMIN_VV(content)]", confidential = TRUE)
-				if(findtext(text("[content]"), "head") && istype(content, /obj/item/bodypart/head/))
-					to_chat(user, "You have the following head: [content] [ADMIN_VV(content)].", confidential = TRUE)
-		else
-			to_chat(user, "You are not of human variety. Something's wrong here.", confidential = TRUE)
-	else // no head wa wa
-		to_chat(user, "tough luck buddy", confidential = TRUE)
-
-	BLACKBOX_LOG_ADMIN_VERB("Hairstyle and bodytype checks.")
+		BLACKBOX_LOG_ADMIN_VERB("Hairstyle and bodytype checks.")
 
 ADMIN_VERB(toggle_game_debug, R_DEBUG, "Debug-Game", "Toggles game debugging.", ADMIN_CATEGORY_DEBUG)
 	GLOB.Debug2 = !GLOB.Debug2
