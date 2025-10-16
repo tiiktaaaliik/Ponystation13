@@ -107,9 +107,11 @@
 /// DOCUMENTMEEEEEEEEE
 /obj/item/bodypart/head/proc/arbitrary_hairstyle_offsetter(gotten_hairstyle, mob/living/carbon/owner_of_the_head_with_a_hairstyle_change, obj/item/bodypart/head/gotten_head_of_the_mob) // I think this fucking sucks but it also works. what do (gotten = passed, so passed from somewhere else to and GOTTEN by this proc)
 	QDEL_NULL(worn_face_offset)
-	if(ishuman(owner_of_the_head_with_a_hairstyle_change) && !ispony(owner_of_the_head_with_a_hairstyle_change)) // making sure that we are not a pony species
-		// balloon_alert(owner_of_the_head_with_a_hairstyle_change, "HELLO HUMAN") // deboog
-		if(findtext("[gotten_hairstyle]", "Equestrian")) // only do offsets and scaling if we are a human and the hair is equestrian
+
+	// checking if our HEAD is HUMAN (or, rather, non-pony/non-humanoid, since all the other races (species) are "just" reskinned humanoids and don't need any extra special hair treatment); (example taken from ``[/datum/reagent/consumable/ethanol/screwdrivercocktail/on_new(data)] of alcohol_reagents.dm at October 16, 2025``)
+	if(gotten_head_of_the_mob.type != /obj/item/bodypart/head/pony)
+		// if we find PONY (non-human??) HAIR on our HUMAN HEAD...
+		if(findtext("[gotten_hairstyle]", "Equestrian")) // only do offsets and smush-scaling if this is a human head and the hair on it is pony
 			worn_face_offset = new(
 				attached_part = src,
 				feature_key = OFFSET_FACE,
@@ -117,6 +119,8 @@
 				offset_y = list("north" = 4, "south" = 4, "east" = 4, "west" = 4),
 				size_modifier = list("north" = 0.8, "south" = 0.8, "east" = 0.8, "west" = 0.8)
 			)
+
+	// this function is currently getting called from `head_hair_and_lips.dm`'s set_hairstyle() proc, which got modified to update when this is done doing its thing and so expects this to return TRUE to proceed properly/normally
 	return TRUE
 
 /obj/item/bodypart/head/Destroy()

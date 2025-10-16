@@ -45,25 +45,18 @@
 		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
 		)
 
-	worn_face_offset = new( // YOU
-		attached_part = src,
-		feature_key = OFFSET_FACE,
-		offset_x = list("north" = 0, "south" = 0, "east" = 5, "west" = -5),
-		offset_y = list("north" = -5, "south" = -6, "east" = -6, "west" = -6),
-		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
-		)
-
 /obj/item/bodypart/head/pony/arbitrary_hairstyle_offsetter(gotten_hairstyle, mob/living/carbon/owner_of_the_head_with_a_hairstyle_change, obj/item/bodypart/head/gotten_head_of_the_mob)
-	. = ..() // if we are ishuman() && ispony(), this executes instead because the parent code is set to do fuckall if we are a pony species
-	//balloon_alert(owner_of_the_head_with_a_hairstyle_change, "A PONY COMING STRAIGHT FROM YOUR CODE!!!") // deboog
-	if(!findtext("[gotten_hairstyle]", "Equestrian")) // if the hair is human hair and we are equestrian, apply offsets and scaling
-		worn_face_offset = new( // YOU
+	. = ..() // this works even without the separation if we do a if(gotten_head_of_the_mob.type == /obj/item/bodypart/head/pony) check in the parent proc, but this seems kinda better. What if we get other non-standard head species some day? Or if others would want to repurpose this code for *their own* non-humanoid species?
+
+	// our HEAD is PONY since the parent code is designed to do fuckall if it isn't detected as a human head; so let's delegate the [SPECIES]-specific code to here!
+	if(!findtext("[gotten_hairstyle]", "Equestrian")) // only do offsets and scaling if this is a pony (equestrian) head and the hair on it is human
+		worn_face_offset = new(
 			attached_part = src,
 			feature_key = OFFSET_FACE,
 			offset_x = list("north" = 0, "south" = 0, "east" = 5, "west" = -5),
 			offset_y = list("north" = -5, "south" = -6, "east" = -6, "west" = -6),
 			size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
-			)
+		)
 
 /obj/item/bodypart/chest/pony
 	icon_greyscale = 'icons/mob/human/species/pony/bodyparts.dmi'
