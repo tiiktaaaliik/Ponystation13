@@ -104,6 +104,21 @@
 		/// Can this head be dismembered normally?
 		can_dismember = FALSE
 
+/// DOCUMENTMEEEEEEEEE
+/obj/item/bodypart/head/proc/arbitrary_hairstyle_offsetter(gotten_hairstyle, mob/living/carbon/owner_of_the_head_with_a_hairstyle_change, obj/item/bodypart/head/gotten_head_of_the_mob) // I think this fucking sucks but it also works. what do (gotten = passed, so passed from somewhere else to and GOTTEN by this proc)
+	QDEL_NULL(worn_face_offset)
+	if(ishuman(owner_of_the_head_with_a_hairstyle_change) && !ispony(owner_of_the_head_with_a_hairstyle_change)) // making sure that we are not a pony species
+		// balloon_alert(owner_of_the_head_with_a_hairstyle_change, "HELLO HUMAN") // deboog
+		if(findtext("[gotten_hairstyle]", "Equestrian")) // only do offsets and scaling if we are a human and the hair is equestrian
+			worn_face_offset = new(
+				attached_part = src,
+				feature_key = OFFSET_FACE,
+				offset_x = list("north" = 0, "south" = 0, "east" = -3, "west" = 3),
+				offset_y = list("north" = 4, "south" = 4, "east" = 4, "west" = 4),
+				size_modifier = list("north" = 0.8, "south" = 0.8, "east" = 0.8, "west" = 0.8)
+			)
+	return TRUE
+
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(worn_ears_offset)
 	QDEL_NULL(worn_glasses_offset)

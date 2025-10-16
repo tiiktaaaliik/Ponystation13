@@ -254,7 +254,11 @@
 	hairstyle = new_style
 	my_head?.hairstyle = new_style
 
-	if(update)
+	// todo check in-game and then add a check here depending on if the head is a ponyhead or a humanhead
+	var/is_done_setting_hair = my_head.arbitrary_hairstyle_offsetter(new_style, my_head.owner, my_head) // calls the function as well
+
+
+	if(is_done_setting_hair && update)
 		update_body_parts()
 
 /**
