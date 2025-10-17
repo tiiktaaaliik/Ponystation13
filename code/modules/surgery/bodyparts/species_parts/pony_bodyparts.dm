@@ -45,11 +45,11 @@
 		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
 		)
 
-/obj/item/bodypart/head/pony/arbitrary_hairstyle_offsetter(gotten_hairstyle, mob/living/carbon/owner_of_the_head_with_a_hairstyle_change, obj/item/bodypart/head/gotten_head_of_the_mob)
-	. = ..() // this works even without the separation if we do a if(gotten_head_of_the_mob.type == /obj/item/bodypart/head/pony) check in the parent proc, but this seems kinda better. What if we get other non-standard head species some day? Or if others would want to repurpose this code for *their own* non-humanoid species?
+/obj/item/bodypart/head/pony/arbitrary_hairstyle_offsetter(gotten_hairstyle, obj/item/bodypart/head/gotten_head_of_the_mob, mob/living/carbon/owner_of_the_head_with_a_hairstyle_change)
+	. = ..() // this works even without the separation if we do an "if(gotten_head_of_the_mob.type == /obj/item/bodypart/head/pony)" check in the parent proc, but this seems kinda better. What if we get other non-standard head species some day? Or if others would want to repurpose this code for *their own* non-humanoid species?
 
-	// our HEAD is PONY since the parent code is designed to do fuckall if it isn't detected as a human head; so let's delegate the [SPECIES]-specific code to here!
-	if(!findtext("[gotten_hairstyle]", "Equestrian")) // only do offsets and scaling if this is a pony (equestrian) head and the hair on it is human
+	// our HEAD is PONY; since the parent code is designed to do fuckall if it isn't detected as a human head; so let's delegate the [SPECIES]-specific code to here! Let's get to work!
+	if(!findtext("[gotten_hairstyle]", "Equestrian")) // only do offsets and up-scaling if this is a pony (equestrian) head and the hair on it is human (if we find HUMAN(OID) HAIR on our PONY HEAD...)
 		worn_face_offset = new(
 			attached_part = src,
 			feature_key = OFFSET_FACE,

@@ -28,7 +28,7 @@ ADMIN_VERB(pony_check, R_DEBUG, "A Head-Hairstyle Check", "Species-specific hair
 				var/list/mob_contents = user.mob.get_contents()
 				for(var/content in mob_contents)
 					if(findtext(text("[content]"), "pony"))
-						to_chat(user, "Found a ponything: [content] [ADMIN_VV(content)]", confidential = TRUE)
+						to_chat(user, "Found something with a \"pony\" in the name: [content] [ADMIN_VV(content)]", confidential = TRUE)
 					if(istype(content, /obj/item/bodypart/head/))
 						to_chat(user, "You have the following head: [content] [ADMIN_VV(content)] of type [my_head.type]", confidential = TRUE)
 
