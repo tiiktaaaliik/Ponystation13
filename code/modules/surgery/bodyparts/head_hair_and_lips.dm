@@ -254,7 +254,9 @@
 	hairstyle = new_style
 	my_head?.hairstyle = new_style
 
-	if(update)
+	var/is_done_setting_hair = my_head.arbitrary_hairstyle_offsetter(new_style, my_head, my_head.owner) // apparently, calls the function as well
+
+	if(is_done_setting_hair && update)
 		update_body_parts()
 
 /**

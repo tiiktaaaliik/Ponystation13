@@ -104,6 +104,40 @@
 		/// Can this head be dismembered normally?
 		can_dismember = FALSE
 
+/**
+ * Takes in any hairstyle and manipulates it to fit a mob's HEAD.
+ *
+ * * gotten_hairstyle - the hairstyle that we were passed from something else (a hairstyle ON THE HEAD, since there is also a separate /mob/living/carbon/human body hairstyle,    yea)
+ * * gotten_head_of_the_mob - the head that we were passed FROM somewhere else TO this proc and GOTTEN by this proc
+ * * owner_of_the_head_with_a_hairstyle_change - the head's owner (my_head.owner as per `head_hair_and_lips.dm`) passed as mob/living/carbon/, a leftover from when this was used to call a debug balloon_alert().
+ *
+ * If the parent proc at /obj/item/bodypart/head/ encounters a non-human(oid) head it just does fuckall and moves on to the other type of head calling this proc -
+ * you are supposed to call this very same proc on your /obj/item/bodypart/head/gargantuar/arbitrary_hairstyle_offsetter() or whatever with custom offsets and scaling.
+ *
+ * Most hairstyles are humanOID-centric, and if this proc encounters a specific non-human hair (Equestrian, Subterranean, Manticorian, *fucking whatever*),
+ * it will manipulate the hair however necessary to fit the human head. HOWEVER, IT'S BETTER FOR HUMANS AND EVERYPONY ELSE IF THEY STICK TO THEIR OWN INTENDED HAIRS.
+ *
+ * This function is currently getting called from `head_hair_and_lips.dm`'s set_hairstyle() proc,
+ * which got modified to update ONLY after this is done, and therefore expects this to return TRUE so it can proceed to update_body_parts() there.
+ */
+/obj/item/bodypart/head/proc/arbitrary_hairstyle_offsetter(gotten_hairstyle, obj/item/bodypart/head/gotten_head_of_the_mob, mob/living/carbon/owner_of_the_head_with_a_hairstyle_change) // I think this fucking sucks but it also works. what do
+	QDEL_NULL(worn_face_offset)
+
+	// checking if our HEAD is HUMAN(OID) (or, rather, NON-PONY, since all the other races (species) are "just" reskinned humanoids and don't need any extra special hair treatment, and currently we only have ponies as the only species with unusual hairstyle offset needs);
+    // checking for the EXACT TYPE and not a subtype like "istype()" does (example taken from ``[/datum/reagent/consumable/ethanol/screwdrivercocktail/on_new(data)] of `alcohol_reagents.dm` at October 16, 2025``)
+	if(gotten_head_of_the_mob.type != /obj/item/bodypart/head/pony)
+		// our HEAD is not a pony, therefore HUMAN(OID); (otherwise don't do anything and let another /head/nonhumanoidhead/arbitrary_hairstyle_offsetter() to do their own head-specific code, that's their problem!)
+		if(findtext("[gotten_hairstyle]", "Equestrian")) // only do offsets and smush-scaling if this is a human head and the hair on it is pony (if we find PONY (non-humanoid) HAIR on our HUMAN(OID) HEAD...)
+			worn_face_offset = new(
+				attached_part = src,
+				feature_key = OFFSET_FACE,
+				offset_x = list("north" = 0, "south" = 0, "east" = -3, "west" = 3),
+				offset_y = list("north" = 4, "south" = 4, "east" = 4, "west" = 4),
+				size_modifier = list("north" = 0.8, "south" = 0.8, "east" = 0.8, "west" = 0.8)
+			)
+
+	return TRUE
+
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(worn_ears_offset)
 	QDEL_NULL(worn_glasses_offset)

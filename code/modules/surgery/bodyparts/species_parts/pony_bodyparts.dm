@@ -8,86 +8,55 @@
 	teeth_count = 24
 	/// Offset to apply to equipment held in the mouth.
 	var/datum/worn_feature_offset/worn_mouth_item_offset
+	//owner.get_bodypart(BODY_ZONE_HEAD)
 
 /obj/item/bodypart/head/pony/Initialize(mapload)
 	. = ..()
 	QDEL_NULL(worn_face_offset)
-/*
-	worn_ears_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_EARS,
-		offset_x = list("north" = -2, "south" = 2, "east" = 4, "west" = -4),
-		offset_y = list("north" = -1, "south" = -1, "east" = -1, "west" = -1),
-		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
-	)
-	worn_mask_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_FACEMASK,
-		offset_x = list("north" = 0, "south" = 0, "east" = 8, "west" = -8),
-		offset_y = list("north" = -6, "south" = -6, "east" = -6, "west" = -6),
-		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
-	)
-	worn_face_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_FACE,
-		offset_x = list("north" = 0, "south" = 0, "east" = 5, "west" = -5),
-		offset_y = list("north" = -6, "south" = -6, "east" = -6, "west" = -6),
-		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
-	)
-*/
 
 	worn_ears_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_EARS,
 		offset_x = list("north" = -4, "south" = 4, "east" = 7, "west" = -7),
 		offset_y = list("north" = 3, "south" = 3, "east" = 3, "west" = 3),
-	)
+		)
+
 	worn_glasses_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_GLASSES,
 		offset_x = list("north" = 0, "south" = 0, "east" = 6, "west" = -6),
 		offset_y = list("north" = -7, "south" = -7, "east" = -7, "west" = -7),
 		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
-	)
-	worn_head_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_HEAD,
-		offset_x = list("north" = 0, "south" = 0, "east" = 6, "west" = -6),
-		offset_y = list("north" = -7, "south" = -7, "east" = -7, "west" = -7),
-		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
-	)
+		)
+
 	worn_mask_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_FACEMASK,
 		offset_x = list("north" = 0, "south" = 0, "east" = 8, "west" = -8),
 		offset_y = list("north" = -6, "south" = -6, "east" = -6, "west" = -6),
 		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
-	)
-	/*worn_glasses_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_GLASSES,
-		offset_x = list("north" = 0, "south" = 0, "east" = 6, "west" = -6),
-		offset_y = list("north" = -3, "south" = -3, "east" = -3, "west" = -3),
-	)
+		)
+
 	worn_head_offset = new(
 		attached_part = src,
 		feature_key = OFFSET_HEAD,
 		offset_x = list("north" = 0, "south" = 0, "east" = 6, "west" = -6),
-		offset_y = list("north" = -1, "south" = -2, "east" = -2, "west" = -2),
-	)
-	worn_mask_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_FACEMASK,
-		offset_x = list("north" = 0, "south" = 0, "east" = 8, "west" = -8),
-		offset_y = list("north" = -4, "south" = -4, "east" = -3, "west" = -3),
-	)*/
-	worn_face_offset = new(
-		attached_part = src,
-		feature_key = OFFSET_FACE,
-		offset_x = list("north" = 0, "south" = 0, "east" = 5, "west" = -5),
-		offset_y = list("north" = -5, "south" = -6, "east" = -6, "west" = -6),
+		offset_y = list("north" = -7, "south" = -7, "east" = -7, "west" = -7),
 		size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
-	)
+		)
+
+/obj/item/bodypart/head/pony/arbitrary_hairstyle_offsetter(gotten_hairstyle, obj/item/bodypart/head/gotten_head_of_the_mob, mob/living/carbon/owner_of_the_head_with_a_hairstyle_change)
+	. = ..() // this works even without the separation if we do an "if(gotten_head_of_the_mob.type == /obj/item/bodypart/head/pony)" check in the parent proc, but this seems kinda better. What if we get other non-standard head species some day? Or if others would want to repurpose this code for *their own* non-humanoid species?
+
+	// our HEAD is PONY; since the parent code is designed to do fuckall if it isn't detected as a human head; so let's delegate the [SPECIES]-specific code to here! Let's get to work!
+	if(!findtext("[gotten_hairstyle]", "Equestrian")) // only do offsets and up-scaling if this is a pony (equestrian) head and the hair on it is human (if we find HUMAN(OID) HAIR on our PONY HEAD...)
+		worn_face_offset = new(
+			attached_part = src,
+			feature_key = OFFSET_FACE,
+			offset_x = list("north" = 0, "south" = 0, "east" = 5, "west" = -5),
+			offset_y = list("north" = -5, "south" = -6, "east" = -6, "west" = -6),
+			size_modifier = list("north" = PONY_HEAD_SIZE_MODIFIER, "south" = PONY_HEAD_SIZE_MODIFIER, "east" = PONY_HEAD_SIZE_MODIFIER, "west" = PONY_HEAD_SIZE_MODIFIER)
+		)
 
 /obj/item/bodypart/chest/pony
 	icon_greyscale = 'icons/mob/human/species/pony/bodyparts.dmi'
